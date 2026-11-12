@@ -729,3 +729,11 @@ impl LlamaContextParams {
         self.context_params.kv_unified
     }
 }
+
+impl LlamaContextParams {
+    /// Set the maximum number of outputs per sequence for backend sampling.
+    pub fn with_n_outputs_max_per_seq(mut self, n: u32) -> Self {
+        self.context_params.n_outputs_max_per_seq = n;
+        self
+    }
+}
