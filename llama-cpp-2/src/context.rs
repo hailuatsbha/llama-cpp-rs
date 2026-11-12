@@ -146,6 +146,11 @@ impl<'model> LlamaContext<'model> {
     /// This is important for allowing logit and embedding methods to return
     /// `&` references, which would otherwise be unsound if these could be
     /// invalidated by a later method call on `LlamaContext`.
+    pub fn set_embeddings_nextn(&self, enabled: bool, masked: bool) {
+        unsafe { llama_cpp_sys_2::llama_rs_set_embeddings_nextn(self.synchronizable_ptr(), enabled, masked); }
+    }
+
+    ///
     pub(crate) unsafe fn synchronizable_ptr(&self) -> *mut llama_cpp_sys_2::llama_context {
         // SAFETY: LlamaContext effectively contains `Cell`s in various
         // places, which are updated when `llama_synchronize` is called.

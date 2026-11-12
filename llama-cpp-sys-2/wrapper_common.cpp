@@ -1,4 +1,5 @@
 #include "wrapper_common.h"
+#include "llama.cpp/src/llama-ext.h"
 
 #include <cstdlib>
 #include <cstring>
@@ -339,6 +340,22 @@ extern "C" llama_rs_status llama_rs_mtp_speculative_accept(
         common_speculative_accept(spec->spec, LLAMA_RS_MTP_SEQ_ID, n_accepted);
         spec->last_draft_len = 0;
         spec->draft_pending = false;
+        return LLAMA_RS_STATUS_OK;
+    } catch (...) {
+        return LLAMA_RS_STATUS_EXCEPTION;
+    }
+}
+
+// Staging-API trampoline: llama-ext.h declares llama_set_embeddings_nextn
+// without C linkage, so the compiled symbol is C++-mangled; expose a C
+// symbol for the Rust binding.
+extern "C" llama_rs_status llama_rs_set_embeddings_nextn(
+    struct llama_context * ctx, bool value, bool masked) {
+    if (!ctx) {
+        return LLAMA_RS_STATUS_INVALID_ARGUMENT;
+    }
+    try {
+        llama_set_embeddings_nextn(ctx, value, masked);
         return LLAMA_RS_STATUS_OK;
     } catch (...) {
         return LLAMA_RS_STATUS_EXCEPTION;

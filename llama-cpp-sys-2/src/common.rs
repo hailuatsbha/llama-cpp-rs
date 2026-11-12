@@ -71,6 +71,8 @@ extern "C" {
     pub fn llama_rs_memory_breakdown_print(ctx: *const llama_context);
 }
 extern "C" {
+    pub fn llama_rs_set_embeddings_nextn(ctx: *mut llama_context, value: bool, masked: bool) -> i32;
+
     pub fn llama_rs_mtp_speculative_init(
         ctx_tgt: *mut llama_context,
         ctx_dft: *mut llama_context,
