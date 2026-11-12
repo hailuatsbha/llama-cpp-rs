@@ -136,7 +136,7 @@ extern "C" int llama_rs_fit_params(
     const void * extra,
     enum ggml_log_level log_level) {
     return static_cast<int>(common_fit_params(
-        path_model,
+        std::vector<std::string>{ path_model ? path_model : "" },
         mparams,
         cparams,
         tensor_split,
