@@ -23,6 +23,24 @@ impl LlamaContextParams {
         self
     }
 
+    /// Set the graph evaluation callback (diagnostics; see ggml_backend_sched_eval_callback).
+    #[must_use]
+    pub fn with_cb_eval(mut self, cb: llama_cpp_sys_2::ggml_backend_sched_eval_callback) -> Self {
+        self.context_params.cb_eval = cb;
+        self
+    }
+
+    /// Set the graph evaluation callback user data (diagnostics).
+    ///
+    /// # Safety
+    /// The pointer must remain valid for the context's lifetime and be
+    /// usable from the callback's thread.
+    #[must_use]
+    pub unsafe fn with_cb_eval_user_data(mut self, ud: *mut std::os::raw::c_void) -> Self {
+        self.context_params.cb_eval_user_data = ud;
+        self
+    }
+
     /// Get the size of the context.
     ///
     /// [`None`] if the context size is specified by the model and not the context.
