@@ -133,6 +133,13 @@ impl LlamaContextParams {
         self
     }
 
+    /// Set the maximum number of outputs per sequence for backend sampling.
+    #[must_use]
+    pub fn with_n_outputs_max_per_seq(mut self, n: u32) -> Self {
+        self.context_params.n_outputs_max_per_seq = n;
+        self
+    }
+
     /// Get the max number of sequences (i.e. distinct states for recurrent models)
     ///
     /// # Examples
