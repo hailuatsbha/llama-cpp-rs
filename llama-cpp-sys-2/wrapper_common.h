@@ -69,6 +69,7 @@ struct llama_rs_mtp_speculative * llama_rs_mtp_speculative_init(
     float p_min);
 
 void llama_rs_mtp_speculative_free(struct llama_rs_mtp_speculative * spec);
+llama_rs_status llama_rs_set_embeddings_nextn(struct llama_context * ctx, bool value, bool masked);
 
 llama_rs_status llama_rs_mtp_speculative_begin(
     struct llama_rs_mtp_speculative * spec,

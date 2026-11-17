@@ -83,6 +83,10 @@ extern "C" {
     pub fn llama_rs_mtp_speculative_free(spec: *mut llama_rs_mtp_speculative);
 }
 extern "C" {
+    pub fn llama_rs_set_embeddings_nextn(ctx: *mut llama_context, value: bool, masked: bool) -> llama_rs_status;
+}
+
+extern "C" {
     pub fn llama_rs_mtp_speculative_begin(
         spec: *mut llama_rs_mtp_speculative,
         prompt_tokens: *const llama_token,

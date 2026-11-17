@@ -1,4 +1,5 @@
 #include "wrapper_common.h"
+#include "llama.cpp/src/llama-ext.h"
 
 #include <cstdlib>
 #include <cstring>
@@ -228,6 +229,19 @@ extern "C" void llama_rs_mtp_speculative_free(struct llama_rs_mtp_speculative * 
         spec->spec = nullptr;
     }
     delete spec;
+}
+
+extern "C" llama_rs_status llama_rs_set_embeddings_nextn(
+    struct llama_context * ctx, bool value, bool masked) {
+    if (!ctx) {
+        return LLAMA_RS_STATUS_INVALID_ARGUMENT;
+    }
+    try {
+        llama_set_embeddings_nextn(ctx, value, masked);
+        return LLAMA_RS_STATUS_OK;
+    } catch (...) {
+        return LLAMA_RS_STATUS_EXCEPTION;
+    }
 }
 
 extern "C" llama_rs_status llama_rs_mtp_speculative_begin(

@@ -157,6 +157,14 @@ impl<'model> LlamaContext<'model> {
     /// This is automatically done when using methods such as
     /// [`get_logits_ith`][Self::get_logits_ith] to obtain computation results
     /// and is not necessary to call it explicitly in most cases.
+    /// Enable or disable nextn (MTP) embedding staging for this context.
+    ///
+    /// `masked` selects whether nextn rows are stored densely by raw token
+    /// position (false) or via the masked slot mechanism (true).
+    pub fn set_embeddings_nextn(&self, enabled: bool, masked: bool) {
+        unsafe { llama_cpp_sys_2::llama_rs_set_embeddings_nextn(self.synchronizable_ptr(), enabled, masked); }
+    }
+
     pub fn synchronize(&self) {
         unsafe { llama_cpp_sys_2::llama_synchronize(self.synchronizable_ptr()) }
     }
